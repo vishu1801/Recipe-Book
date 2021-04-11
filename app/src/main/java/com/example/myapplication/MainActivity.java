@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void showSignInOptions() {
         //noinspection deprecation
         startActivityForResult(
@@ -85,7 +84,9 @@ public class MainActivity extends AppCompatActivity {
             final IdpResponse response=IdpResponse.fromResultIntent(data);
             if(resultCode!=RESULT_OK)
             {
-                Toast.makeText(getApplicationContext(),""+response.getError().getMessage(),Toast.LENGTH_SHORT).show();
+               Intent reverse_intent=new Intent(getApplicationContext(),MainActivity.class);
+               startActivity(reverse_intent);
+               finish();
             }
             else
             {
