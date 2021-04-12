@@ -16,7 +16,7 @@ import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
-public class SearchFragment extends Fragment {
+public class SearchByIngredientsFragment extends Fragment {
     SearchView searchView;
     ListView listView;
     ArrayList<String> mylist;

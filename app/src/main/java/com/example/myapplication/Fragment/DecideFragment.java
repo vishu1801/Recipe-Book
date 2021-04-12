@@ -1,14 +1,12 @@
 package com.example.myapplication.Fragment;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-
-import com.example.myapplication.Fragment.HomeFragment;
-import com.example.myapplication.Fragment.SearchFragment;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -30,8 +28,14 @@ public class DecideFragment extends AppCompatActivity {
                 case R.id.nav_home:
                     selectedfragment=new HomeFragment();
                     break;
-                case R.id.nav_search:
-                    selectedfragment=new SearchFragment();
+                case R.id.nav_search_by_ingredient:
+                    selectedfragment=new SearchByIngredientsFragment();
+                    break;
+                case R.id.nav_search_by_recipes:
+                    selectedfragment=new SearchByRecipesFragment();
+                    break;
+                case R.id.nav_fav:
+                    selectedfragment=new FavoriteFragment();
                     break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_nav,selectedfragment).commit();
