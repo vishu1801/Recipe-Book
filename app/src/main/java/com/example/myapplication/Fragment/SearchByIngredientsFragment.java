@@ -51,13 +51,14 @@ public class SearchByIngredientsFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
-                if(newText==""){
-                    searchView.setQueryHint("Search By Ingredients");
-                }
-                else {
-                    get_Ingredients(newText);
-                }
+//
+//                if(newText==""){
+//                    searchView.setQueryHint("Search By Ingredients");
+//                }
+//                else {
+//                    get_Ingredients(newText);
+//                }
+                get_Ingredients(newText);
 //                adapter.getFilter().filter(newText);
                 return false;
             }
