@@ -15,7 +15,7 @@ public class DecideFragment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch);
+        setContentView(R.layout.activity_decide_fragment);
         BottomNavigationView bottomnav = findViewById(R.id.bottom_nav);
         bottomnav.setOnNavigationItemSelectedListener(navlistner);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_nav,new HomeFragment()).commit();
