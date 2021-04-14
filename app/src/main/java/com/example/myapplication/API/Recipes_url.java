@@ -1,6 +1,6 @@
 package com.example.myapplication.API;
 
-public @interface Recipes_url {
+public interface Recipes_url {
     public String Base_Url = "https://api.spoonacular.com";
     public String apiKey = "4174c86c3bbd43b4a0962ce6cca21a32";
 

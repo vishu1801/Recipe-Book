@@ -14,16 +14,17 @@
         android:layout_height="wrap_content"
         android:text="ingredient"
         android:layout_toEndOf="@+id/ingredient_image"
-        android:layout_toStartOf="@+id/_ingredient_checkbox"
+        android:layout_toStartOf="@+id/add_ingredient"
         android:id="@+id/ingredient_name"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:textSize="30sp"/>
-    <CheckBox
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/_ingredient_checkbox"
+        android:id="@+id/add_ingredient"
         android:layout_alignParentRight="true"
+        android:text="ADD"
         />
 
 </RelativeLayout>
