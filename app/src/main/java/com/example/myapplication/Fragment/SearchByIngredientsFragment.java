@@ -40,10 +40,9 @@ import static com.example.myapplication.R.layout;
 
 public class SearchByIngredientsFragment extends Fragment {
     SearchView searchView;
-    ListView listView_for_search;
-    ListView listView_for_pantry;
     ArrayList<UserResponse> mylist_for_search;
     Ingredient_list_for_search_adapter adapter_for_search;
+    ListView listView_for_search,listView_for_pantry;
     Button view_recipe;
     TextView your_ingredient;
     @Nullable
@@ -54,11 +53,8 @@ public class SearchByIngredientsFragment extends Fragment {
 
         searchView = (SearchView) root.findViewById(R.id.search_view);
         view_recipe = (Button) root.findViewById(R.id.view_recipe);
-        listView_for_search = root.findViewById(R.id.list_item_for_search);
+        for_pantry(root);
         your_ingredient = root.findViewById(R.id.your_ingredient_text);
-        mylist_for_search=new ArrayList<UserResponse>();
-        adapter_for_search=new Ingredient_list_for_search_adapter(getActivity(), R.layout.ingredient_list_item,mylist_for_search);
-        listView_for_search.setAdapter(adapter_for_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -67,19 +63,19 @@ public class SearchByIngredientsFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                for_search(root);
                 get_Ingredients(newText);
 //                adapter.getFilter().filter(newText);
                 return false;
             }
         });
-        for_pantry(root);
         return root;
     }
 
-    public Void for_pantry(View view){
-        listView_for_pantry=(ListView)view.findViewById(R.id.list_item_for_pantry);
-        listView_for_pantry.setVisibility(VISIBLE);
+    public View for_pantry(View view){
+
         ArrayList<UserResponse> mylist_for_pantry = new ArrayList<UserResponse>();
+        listView_for_pantry=(ListView)view.findViewById(R.id.list_item_for_pantry);
         Ingredient_lis_for_pantry_adapter adapter_for_pantry = new Ingredient_lis_for_pantry_adapter(getActivity(), layout.ingredient_item_list_for_pantry,mylist_for_pantry);
         listView_for_pantry.setAdapter(adapter_for_pantry);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ingredients").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -117,6 +113,15 @@ public class SearchByIngredientsFragment extends Fragment {
             }
         });
         adapter_for_pantry.notifyDataSetChanged();
+        return view;
+    }
+
+    public Void for_search(View view){
+
+        mylist_for_search=new ArrayList<UserResponse>();
+        listView_for_search = view.findViewById(R.id.list_item_for_search);
+        adapter_for_search=new Ingredient_list_for_search_adapter(getActivity(), R.layout.ingredient_list_item,mylist_for_search);
+        listView_for_search.setAdapter(adapter_for_search);
         return null;
     }
 

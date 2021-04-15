@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/search_view"
-        app:queryHint="Search Here"
+        app:queryHint="Add Ingredient"
+        android:inputType="text"
         app:iconifiedByDefault="false"
         />
     <TextView
@@ -16,14 +17,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/your_ingredient_text"
         android:layout_below="@+id/search_view"
-        android:text="Your Ingredients"/>
+        android:text="Your Ingredients"
+        android:textAlignment="center"
+        android:textSize="30sp"/>
 
     <ListView
         android:id="@+id/list_item_for_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search_view"
-        android:layout_above="@+id/view_recipe"/>
+        android:layout_below="@+id/search_view" />
 
     <ListView
         android:id="@+id/list_item_for_pantry"
@@ -37,6 +39,7 @@
         android:layout_height="wrap_content"
         android:text="View Recipes"
         android:id="@+id/view_recipe"
+        android:textSize="20sp"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
