@@ -15,10 +15,16 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.API.ApiClient;
+import com.example.myapplication.Custom_Adapter.Ingredient_lis_for_pantry_adapter;
 import com.example.myapplication.Custom_Adapter.Ingredient_list_for_search_adapter;
 import com.example.myapplication.R;
 import com.example.myapplication.UserResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +41,10 @@ import static com.example.myapplication.R.layout;
 public class SearchByIngredientsFragment extends Fragment {
     SearchView searchView;
     ListView listView_for_search;
+    ListView listView_for_pantry;
     ArrayList<UserResponse> mylist_for_search;
     Ingredient_list_for_search_adapter adapter_for_search;
     Button view_recipe;
-    DatabaseReference ref;
     TextView your_ingredient;
     @Nullable
     @Override
@@ -66,8 +72,52 @@ public class SearchByIngredientsFragment extends Fragment {
                 return false;
             }
         });
-
+        for_pantry(root);
         return root;
+    }
+
+    public Void for_pantry(View view){
+        listView_for_pantry=(ListView)view.findViewById(R.id.list_item_for_pantry);
+        listView_for_pantry.setVisibility(VISIBLE);
+        ArrayList<UserResponse> mylist_for_pantry = new ArrayList<UserResponse>();
+        Ingredient_lis_for_pantry_adapter adapter_for_pantry = new Ingredient_lis_for_pantry_adapter(getActivity(), layout.ingredient_item_list_for_pantry,mylist_for_pantry);
+        listView_for_pantry.setAdapter(adapter_for_pantry);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ingredients").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String name = snapshot.child("name").getValue().toString();
+                String image = snapshot.child("image").getValue().toString();
+
+                UserResponse userResponse = new UserResponse();
+                userResponse.setImage(image);
+                userResponse.setName(name);
+
+                mylist_for_pantry.add(userResponse);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        adapter_for_pantry.notifyDataSetChanged();
+        return null;
     }
 
     public void get_Ingredients(String incomplete_ingredient){
@@ -82,9 +132,11 @@ public class SearchByIngredientsFragment extends Fragment {
                     if(mylist_for_search.isEmpty()){
                         view_recipe.setVisibility(VISIBLE);
                         your_ingredient.setVisibility(VISIBLE);
+                        listView_for_pantry.setVisibility(VISIBLE);
                     }else{
                         view_recipe.setVisibility(INVISIBLE);
                         your_ingredient.setVisibility(INVISIBLE);
+                        listView_for_pantry.setVisibility(INVISIBLE);
                     }
                     adapter_for_search.notifyDataSetChanged();
                 }

@@ -16,11 +16,8 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.R;
 import com.example.myapplication.UserResponse;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,7 +27,6 @@ public class Ingredient_list_for_search_adapter extends ArrayAdapter<UserRespons
     private Context mcontext;
     int mResource;
     ArrayList<UserResponse> list;
-    long maxid=0;
     DatabaseReference reference;
     public Ingredient_list_for_search_adapter(@NonNull Context context, int resource, @NonNull ArrayList<UserResponse> objects) {
         super(context, resource, objects);
@@ -62,19 +58,6 @@ public class Ingredient_list_for_search_adapter extends ArrayAdapter<UserRespons
                 userResponse.setName(list.get(position).getName());
                 userResponse.setImage(list.get(position).getImage());
                 reference= FirebaseDatabase.getInstance().getReference().child("Ingredients").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            maxid=(snapshot.getChildrenCount());
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
                 reference.push().setValue(userResponse);
                 Toast.makeText(mcontext, "Ingredient Added Successfully.", Toast.LENGTH_SHORT).show();
             }

@@ -25,6 +25,14 @@
         android:layout_below="@+id/search_view"
         android:layout_above="@+id/view_recipe"/>
 
+    <ListView
+        android:id="@+id/list_item_for_pantry"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/your_ingredient_text"
+        android:visibility="visible"
+        android:layout_above="@+id/view_recipe"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
