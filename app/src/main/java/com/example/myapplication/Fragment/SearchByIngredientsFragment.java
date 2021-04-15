@@ -27,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class SearchByIngredientsFragment extends Fragment {
     Ingredient_list_for_search_adapter adapter_for_search;
     ListView listView_for_search,listView_for_pantry;
     Button view_recipe;
+    String ingredients="";
     TextView your_ingredient;
     @Nullable
     @Override
@@ -149,18 +151,46 @@ public class SearchByIngredientsFragment extends Fragment {
 
     private void  view_related_recipe(){
 
-        Fragment fragment = new SearchByRecipesFragment();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_nav, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Ingredients").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    ingredients=ingredients+dataSnapshot.child("name").getValue().toString()+",";
+                }
+                transfer();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 //        Intent intent = new Intent(getActivity(),DecideFragment.class);
 //        intent.putExtra("view_recipe","true");
 //        startActivity(intent);
 //        SearchByRecipesFragment ldf = new SearchByRecipesFragment();
 //        getFragmentManager().beginTransaction().add(R.id.container, ldf).commit();
 
+    }
+
+    public void transfer(){
+        if(ingredients==""){
+            Toast.makeText(getContext(), "sorry", Toast.LENGTH_SHORT).show();
+        }else {
+            Bundle args = new Bundle();
+            args.putString("ingredient", ingredients);
+//        SearchByRecipesFragment ldf = new SearchByRecipesFragment();
+//        ldf.setArguments(args);
+//        getFragmentManager().beginTransaction().add(R.id.fragment_nav, ldf).commit();
+            SearchByRecipesFragment fragment = new SearchByRecipesFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragment.setArguments(args);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_nav, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 
     public void get_Ingredients(String incomplete_ingredient){

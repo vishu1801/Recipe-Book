@@ -10,59 +10,43 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.API.ApiClient;
 import com.example.myapplication.R;
-import com.example.myapplication.UserResponse;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.myapplication.RecipeResponse;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.example.myapplication.API.Recipes_url.apiKey;
 
 public class SearchByRecipesFragment extends Fragment {
     ListView listView_for_ingredient;
-    String ingredients="";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View parent_view=inflater.inflate(R.layout.recipes,container,false);
         View root_view= inflater.inflate(R.layout.recipes,null);
 
-        get_ingredients();
-        init(root_view);
+        String ingredient=getArguments().getString("ingredient");
+        Call<List<RecipeResponse>> recipecall = ApiClient.getUserService().get_recipe_by_Ingredients(apiKey, ingredient, 10);
+        recipecall.enqueue(new Callback<List<RecipeResponse>>() {
+            @Override
+            public void onResponse(Call<List<RecipeResponse>> call, Response<List<RecipeResponse>> response) {
+                if (response.isSuccessful()) {
+                    
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RecipeResponse>> call, Throwable t) {
+
+            }
+        });
 
         return root_view;
     }
 
-    private void init(View v){
-
-    }
-    private void get_ingredients(){
-        ArrayList<UserResponse> mylist_for_pantry = new ArrayList<UserResponse>();
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Ingredients").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    ingredients=ingredients+dataSnapshot.child("name").getValue().toString()+",";
-                }
-                
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-//        if(mylist_for_pantry.isEmpty()){
-//            Toast.makeText(getActivity(), "Yes empty", Toast.LENGTH_SHORT).show();
-//        }
-//        for (UserResponse userResponse:mylist_for_pantry){
-//            ingredients=ingredients + userResponse.getName().toString() + ",";
-//        }
-    }
 }
