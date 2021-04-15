@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.API.ApiClient;
 import com.example.myapplication.Custom_Adapter.Ingredient_lis_for_pantry_adapter;
@@ -33,8 +35,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 import static com.example.myapplication.API.Recipes_url.apiKey;
 import static com.example.myapplication.R.layout;
 
@@ -48,12 +48,19 @@ public class SearchByIngredientsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root_view = inflater.inflate(layout.fragment_search,container,false);
+//        View root_view = inflater.inflate(layout.fragment_search,container,false);
         View root=inflater.inflate(R.layout.fragment_search,null);
 
         searchView = (SearchView) root.findViewById(R.id.search_view);
         view_recipe = (Button) root.findViewById(R.id.view_recipe);
+        view_recipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view_related_recipe();
+            }
+        });
         for_pantry(root);
+        for_search(root);
         your_ingredient = root.findViewById(R.id.your_ingredient_text);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -63,8 +70,22 @@ public class SearchByIngredientsFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                for_search(root);
-                get_Ingredients(newText);
+                if(newText.length()>0){
+                    for_search(root);
+                    get_Ingredients(newText);
+
+                    listView_for_pantry.setVisibility(View.GONE);
+                    listView_for_search.setVisibility(View.VISIBLE);
+                    view_recipe.setVisibility(View.GONE);
+                    your_ingredient.setVisibility(View.GONE);
+
+                }
+                else {
+                    listView_for_pantry.setVisibility(View.VISIBLE);
+                    listView_for_search.setVisibility(View.GONE);
+                    view_recipe.setVisibility(View.VISIBLE);
+                    your_ingredient.setVisibility(View.VISIBLE);
+                }
 //                adapter.getFilter().filter(newText);
                 return false;
             }
@@ -72,7 +93,7 @@ public class SearchByIngredientsFragment extends Fragment {
         return root;
     }
 
-    public View for_pantry(View view){
+    private Void for_pantry(View view){
 
         ArrayList<UserResponse> mylist_for_pantry = new ArrayList<UserResponse>();
         listView_for_pantry=(ListView)view.findViewById(R.id.list_item_for_pantry);
@@ -99,6 +120,7 @@ public class SearchByIngredientsFragment extends Fragment {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                mylist_for_pantry.indexOf(snapshot.getKey());
 
             }
 
@@ -113,16 +135,32 @@ public class SearchByIngredientsFragment extends Fragment {
             }
         });
         adapter_for_pantry.notifyDataSetChanged();
-        return view;
+        return null;
     }
 
-    public Void for_search(View view){
+    private Void for_search(View view){
 
         mylist_for_search=new ArrayList<UserResponse>();
         listView_for_search = view.findViewById(R.id.list_item_for_search);
         adapter_for_search=new Ingredient_list_for_search_adapter(getActivity(), R.layout.ingredient_list_item,mylist_for_search);
         listView_for_search.setAdapter(adapter_for_search);
         return null;
+    }
+
+    private void  view_related_recipe(){
+
+        Fragment fragment = new SearchByRecipesFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_nav, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+//        Intent intent = new Intent(getActivity(),DecideFragment.class);
+//        intent.putExtra("view_recipe","true");
+//        startActivity(intent);
+//        SearchByRecipesFragment ldf = new SearchByRecipesFragment();
+//        getFragmentManager().beginTransaction().add(R.id.container, ldf).commit();
+
     }
 
     public void get_Ingredients(String incomplete_ingredient){
@@ -134,15 +172,15 @@ public class SearchByIngredientsFragment extends Fragment {
                 if(response.isSuccessful()) {
                     mylist_for_search.clear();
                     mylist_for_search.addAll(response.body());
-                    if(mylist_for_search.isEmpty()){
-                        view_recipe.setVisibility(VISIBLE);
-                        your_ingredient.setVisibility(VISIBLE);
-                        listView_for_pantry.setVisibility(VISIBLE);
-                    }else{
-                        view_recipe.setVisibility(INVISIBLE);
-                        your_ingredient.setVisibility(INVISIBLE);
-                        listView_for_pantry.setVisibility(INVISIBLE);
-                    }
+//                    if(mylist_for_search.isEmpty()){
+//                        view_recipe.setVisibility(VISIBLE);
+//                        your_ingredient.setVisibility(VISIBLE);
+//                        listView_for_pantry.setVisibility(VISIBLE);
+//                    }else{
+//                        view_recipe.setVisibility(INVISIBLE);
+//                        your_ingredient.setVisibility(INVISIBLE);
+//                        listView_for_pantry.setVisibility(INVISIBLE);
+//                    }
                     adapter_for_search.notifyDataSetChanged();
                 }
             }

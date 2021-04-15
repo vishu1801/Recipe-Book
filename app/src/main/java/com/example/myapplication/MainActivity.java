@@ -1,12 +1,11 @@
 package com.example.myapplication;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.myapplication.Fragment.DecideFragment;
 import com.firebase.ui.auth.AuthUI;
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else {
                         Intent homeIntent = new Intent(getApplicationContext(), DecideFragment.class);
+
                         startActivity(homeIntent);
                         finish();
                     }

@@ -25,6 +25,7 @@
         android:id="@+id/list_item_for_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:layout_below="@+id/search_view" />
 
     <ListView
