@@ -30,7 +30,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/your_ingredient_text"
-        android:visibility="visible"
         android:layout_above="@+id/view_recipe"/>
 
     <Button
