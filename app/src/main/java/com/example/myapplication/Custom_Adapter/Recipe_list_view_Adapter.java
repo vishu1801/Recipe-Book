@@ -7,12 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.AllResponse.RecipeResponse;
+import com.example.myapplication.List_recipe;
 import com.example.myapplication.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,6 +26,9 @@ public class Recipe_list_view_Adapter extends ArrayAdapter<RecipeResponse> {
     Context mcontext;
     int mresource;
     ArrayList<RecipeResponse> my_list;
+    ArrayList<List_recipe> my_list1;
+    ImageView fav1;
+    DatabaseReference reference;
     public Recipe_list_view_Adapter(@NonNull Context context, int resource, @NonNull ArrayList<RecipeResponse> objects) {
         super(context, resource, objects);
         my_list=objects;
@@ -33,22 +41,33 @@ public class Recipe_list_view_Adapter extends ArrayAdapter<RecipeResponse> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(mcontext);
         convertView=layoutInflater.inflate(mresource,parent,false);
+
+
+        my_list1=new ArrayList<List_recipe>();
+        for(int i=0;i<my_list.size();i++){
+            List_recipe list = new List_recipe(my_list.get(i).getId());
+            my_list1.add(list);
+        }
         String name=getItem(position).getTitle();
         String image=getItem(position).getImage();
         Integer missedIngredient=getItem(position).getMissedIngredientCount();
         ImageView imageView = (ImageView) convertView.findViewById(R.id.image_view_for_recipe);
         TextView recipe_title= (TextView) convertView.findViewById(R.id.recipe_title);
         TextView missed_ingredient = (TextView) convertView.findViewById(R.id.missed_ingredient);
-        ImageView fav1 = (ImageView) convertView.findViewById(R.id.fav1);
+        fav1 = (ImageView) convertView.findViewById(R.id.fav1);
         fav1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fav1.getTag()=="fav1"){
-                    fav1.setImageResource(R.drawable.red_heart);
-                    fav1.setTag("fav2");
-                }else{
+                if(my_list1.get(position).isIsclicked()) {
+                    Toast.makeText(mcontext, "true", Toast.LENGTH_SHORT).show();
+                    my_list1.get(position).setIsclicked(false);
                     fav1.setImageResource(R.drawable.favorite);
-                    fav1.setTag("fav1");
+                    remove_from_favorite(position);
+                }else{
+                    Toast.makeText(mcontext, "false", Toast.LENGTH_SHORT).show();
+                    my_list1.get(position).setIsclicked(true);
+                    fav1.setImageResource(R.drawable.red_heart);
+                    add_to_favorite(position);
                 }
             }
         });
@@ -57,4 +76,33 @@ public class Recipe_list_view_Adapter extends ArrayAdapter<RecipeResponse> {
         missed_ingredient.setText(missedIngredient+"Ingredient Missed");
         return convertView;
     }
+
+    private void remove_from_favorite(int pos){
+        fav1.setImageResource(R.drawable.favorite);
+        fav1.setTag("fav1");
+    }
+
+    private void add_to_favorite(int position){
+        fav1.setImageResource(R.drawable.red_heart);
+        fav1.setTag("fav2");
+        RecipeResponse recipeResponse = new RecipeResponse();
+        recipeResponse.setId(my_list.get(position).getId());
+        recipeResponse.setTitle(my_list.get(position).getTitle());
+        recipeResponse.setImage(my_list.get(position).getImage());
+        recipeResponse.setImageType(my_list.get(position).getImageType());
+        recipeResponse.setImage(my_list.get(position).getImage());
+        recipeResponse.setUsedIngredientCount(my_list.get(position).getUsedIngredientCount());
+        recipeResponse.setMissedIngredientCount(my_list.get(position).getMissedIngredientCount());
+        recipeResponse.setMissedIngredients(my_list.get(position).getMissedIngredients());
+        recipeResponse.setUsedIngredients(my_list.get(position).getUsedIngredients());
+        recipeResponse.setUnusedIngredients(my_list.get(position).getUnusedIngredients());
+        recipeResponse.setLikes(my_list.get(position).getLikes());
+
+        reference = FirebaseDatabase.getInstance().getReference().child("Favorites").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        reference.push().setValue(recipeResponse);
+
+        Toast.makeText(mcontext, "Added To your Favorite", Toast.LENGTH_SHORT).show();
+
+    }
+
 }
