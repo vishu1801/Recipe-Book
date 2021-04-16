@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/nav_home"
+    <item android:id="@+id/nav_search_by_ingredient"
         android:icon="@drawable/home"
         android:title="Home"/>
-    <item android:id="@+id/nav_search_by_ingredient"
-        android:icon="@drawable/search"
-        android:title="Search By Ingredient"/>
     <item android:id="@+id/nav_search_by_recipes"
         android:icon="@drawable/search"
         android:title="Search By Recipe" />

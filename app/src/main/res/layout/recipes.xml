@@ -17,13 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/search_view_recipe"
-        android:id="@+id/ingredient_related_recipe"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/search_view_recipe"
-        android:id="@+id/temp"
-        android:textSize="50sp"/>
+        android:id="@+id/ingredient_related_recipe"
+        android:layout_marginHorizontal="15sp"/>
 
 </RelativeLayout>

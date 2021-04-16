@@ -19,16 +19,13 @@ public class DecideFragment extends AppCompatActivity {
         view_recipe=getIntent().getStringExtra("view_recipe");
         BottomNavigationView bottomnav = findViewById(R.id.bottom_nav);
         bottomnav.setOnNavigationItemSelectedListener(navlistner);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_nav,new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_nav,new SearchByIngredientsFragment()).commit();
     }
     BottomNavigationView.OnNavigationItemSelectedListener navlistner = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedfragment=null;
                 switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        selectedfragment = new HomeFragment();
-                        break;
                     case R.id.nav_search_by_ingredient:
                         selectedfragment = new SearchByIngredientsFragment();
                         break;

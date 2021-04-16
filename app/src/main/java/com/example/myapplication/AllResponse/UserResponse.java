@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.AllResponse;
 
 public class UserResponse {
     public String name;

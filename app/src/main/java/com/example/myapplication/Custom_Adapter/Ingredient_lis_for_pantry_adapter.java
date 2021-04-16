@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
-import com.example.myapplication.UserResponse;
+import com.example.myapplication.AllResponse.UserResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

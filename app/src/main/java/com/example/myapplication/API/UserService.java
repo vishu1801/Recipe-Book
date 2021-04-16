@@ -1,7 +1,7 @@
 package com.example.myapplication.API;
 
-import com.example.myapplication.RecipeResponse;
-import com.example.myapplication.UserResponse;
+import com.example.myapplication.AllResponse.RecipeResponse;
+import com.example.myapplication.AllResponse.UserResponse;
 
 import java.util.List;
 
