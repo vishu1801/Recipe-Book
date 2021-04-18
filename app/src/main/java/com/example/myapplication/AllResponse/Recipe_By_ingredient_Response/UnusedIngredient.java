@@ -1,11 +1,11 @@
-package com.example.myapplication.AllResponse;
+package com.example.myapplication.AllResponse.Recipe_By_ingredient_Response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MissedIngredient {
+public class UnusedIngredient {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -38,16 +38,13 @@ public class MissedIngredient {
     private String originalName;
     @SerializedName("metaInformation")
     @Expose
-    private List<String> metaInformation = null;
+    private List<Object> metaInformation = null;
     @SerializedName("meta")
     @Expose
-    private List<String> meta = null;
+    private List<Object> meta = null;
     @SerializedName("image")
     @Expose
     private String image;
-    @SerializedName("extendedName")
-    @Expose
-    private String extendedName;
 
     public Integer getId() {
         return id;
@@ -129,19 +126,19 @@ public class MissedIngredient {
         this.originalName = originalName;
     }
 
-    public List<String> getMetaInformation() {
+    public List<Object> getMetaInformation() {
         return metaInformation;
     }
 
-    public void setMetaInformation(List<String> metaInformation) {
+    public void setMetaInformation(List<Object> metaInformation) {
         this.metaInformation = metaInformation;
     }
 
-    public List<String> getMeta() {
+    public List<Object> getMeta() {
         return meta;
     }
 
-    public void setMeta(List<String> meta) {
+    public void setMeta(List<Object> meta) {
         this.meta = meta;
     }
 
@@ -152,13 +149,4 @@ public class MissedIngredient {
     public void setImage(String image) {
         this.image = image;
     }
-
-    public String getExtendedName() {
-        return extendedName;
-    }
-
-    public void setExtendedName(String extendedName) {
-        this.extendedName = extendedName;
-    }
-
 }

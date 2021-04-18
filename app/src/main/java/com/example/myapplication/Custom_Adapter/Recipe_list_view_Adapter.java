@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.myapplication.AllResponse.RecipeResponse;
+import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.RecipeResponse;
 import com.example.myapplication.List_recipe;
 import com.example.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;

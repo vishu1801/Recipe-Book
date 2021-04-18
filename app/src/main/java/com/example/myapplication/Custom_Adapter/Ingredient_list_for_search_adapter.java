@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
-import com.example.myapplication.AllResponse.UserResponse;
+import com.example.myapplication.AllResponse.AutoComplete_ingredients;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,13 +22,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Ingredient_list_for_search_adapter extends ArrayAdapter<UserResponse> {
+public class Ingredient_list_for_search_adapter extends ArrayAdapter<AutoComplete_ingredients> {
 
     private Context mcontext;
     int mResource;
-    ArrayList<UserResponse> list;
+    ArrayList<AutoComplete_ingredients> list;
     DatabaseReference reference;
-    public Ingredient_list_for_search_adapter(@NonNull Context context, int resource, @NonNull ArrayList<UserResponse> objects) {
+    public Ingredient_list_for_search_adapter(@NonNull Context context, int resource, @NonNull ArrayList<AutoComplete_ingredients> objects) {
         super(context, resource, objects);
         mcontext=context;
         mResource=resource;
@@ -54,11 +54,11 @@ public class Ingredient_list_for_search_adapter extends ArrayAdapter<UserRespons
         add_ingredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserResponse userResponse = new UserResponse();
-                userResponse.setName(list.get(position).getName());
-                userResponse.setImage(list.get(position).getImage());
+                AutoComplete_ingredients autoCompleteingredients = new AutoComplete_ingredients();
+                autoCompleteingredients.setName(list.get(position).getName());
+                autoCompleteingredients.setImage(list.get(position).getImage());
                 reference= FirebaseDatabase.getInstance().getReference().child("Ingredients").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                reference.push().setValue(userResponse);
+                reference.push().setValue(autoCompleteingredients);
                 Toast.makeText(mcontext, "Ingredient Added Successfully.", Toast.LENGTH_SHORT).show();
             }
         });

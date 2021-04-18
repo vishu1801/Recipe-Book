@@ -10,10 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.myapplication.AllResponse.MissedIngredient;
-import com.example.myapplication.AllResponse.RecipeResponse;
-import com.example.myapplication.AllResponse.UnusedIngredient;
-import com.example.myapplication.AllResponse.UsedIngredient;
+import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.MissedIngredient;
+import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.RecipeResponse;
+import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.UnusedIngredient;
+import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.UsedIngredient;
 import com.example.myapplication.Custom_Adapter.Recipe_list_view_Adapter;
 import com.example.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;

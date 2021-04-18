@@ -8,15 +8,24 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        app:queryHint="Search Recipe"
-       android:id="@+id/search_view_recipe">
-       <ListView
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"/>
-   </androidx.appcompat.widget.SearchView>
+       android:id="@+id/search_view_recipe"
+       android:inputType="text"
+       app:iconifiedByDefault="false"
+       android:visibility="gone"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+
+        android:layout_below="@+id/search_view_recipe"
+        />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search_view_recipe"
+        android:layout_below="@+id/text_view"
         android:id="@+id/ingredient_related_recipe"
         android:layout_marginHorizontal="15sp"/>
 

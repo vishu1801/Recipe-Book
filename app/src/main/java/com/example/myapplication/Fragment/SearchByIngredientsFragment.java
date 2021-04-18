@@ -20,7 +20,7 @@ import com.example.myapplication.API.ApiClient;
 import com.example.myapplication.Custom_Adapter.Ingredient_lis_for_pantry_adapter;
 import com.example.myapplication.Custom_Adapter.Ingredient_list_for_search_adapter;
 import com.example.myapplication.R;
-import com.example.myapplication.AllResponse.UserResponse;
+import com.example.myapplication.AllResponse.AutoComplete_ingredients;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +41,7 @@ import static com.example.myapplication.R.layout;
 
 public class SearchByIngredientsFragment extends Fragment {
     SearchView searchView;
-    ArrayList<UserResponse> mylist_for_search;
+    ArrayList<AutoComplete_ingredients> mylist_for_search;
     Ingredient_list_for_search_adapter adapter_for_search;
     ListView listView_for_search,listView_for_pantry;
     Button view_recipe;
@@ -97,7 +97,7 @@ public class SearchByIngredientsFragment extends Fragment {
 
     private void for_pantry(View view){
 
-        ArrayList<UserResponse> mylist_for_pantry = new ArrayList<UserResponse>();
+        ArrayList<AutoComplete_ingredients> mylist_for_pantry = new ArrayList<AutoComplete_ingredients>();
         listView_for_pantry=(ListView)view.findViewById(R.id.list_item_for_pantry);
         Ingredient_lis_for_pantry_adapter adapter_for_pantry = new Ingredient_lis_for_pantry_adapter(getActivity(), layout.ingredient_item_list_for_pantry,mylist_for_pantry);
         listView_for_pantry.setAdapter(adapter_for_pantry);
@@ -108,11 +108,11 @@ public class SearchByIngredientsFragment extends Fragment {
                 String name = snapshot.child("name").getValue().toString();
                 String image = snapshot.child("image").getValue().toString();
 
-                UserResponse userResponse = new UserResponse();
-                userResponse.setImage(image);
-                userResponse.setName(name);
+                AutoComplete_ingredients autoCompleteingredients = new AutoComplete_ingredients();
+                autoCompleteingredients.setImage(image);
+                autoCompleteingredients.setName(name);
 
-                mylist_for_pantry.add(userResponse);
+                mylist_for_pantry.add(autoCompleteingredients);
             }
 
             @Override
@@ -140,7 +140,7 @@ public class SearchByIngredientsFragment extends Fragment {
 
     private void for_search(View view){
 
-        mylist_for_search=new ArrayList<UserResponse>();
+        mylist_for_search=new ArrayList<AutoComplete_ingredients>();
         listView_for_search = view.findViewById(R.id.list_item_for_search);
         adapter_for_search=new Ingredient_list_for_search_adapter(getActivity(), R.layout.ingredient_list_item,mylist_for_search);
         listView_for_search.setAdapter(adapter_for_search);
@@ -191,10 +191,10 @@ public class SearchByIngredientsFragment extends Fragment {
     }
 
     public void get_Ingredients(String incomplete_ingredient){
-        Call<List<UserResponse>> userResponseCall = ApiClient.getUserService().get_ingredients(apiKey,incomplete_ingredient,10);
-        userResponseCall.enqueue(new Callback<List<UserResponse>>() {
+        Call<List<AutoComplete_ingredients>> userResponseCall = ApiClient.getUserService().get_ingredients(apiKey,incomplete_ingredient,10);
+        userResponseCall.enqueue(new Callback<List<AutoComplete_ingredients>>() {
             @Override
-            public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
+            public void onResponse(Call<List<AutoComplete_ingredients>> call, Response<List<AutoComplete_ingredients>> response) {
 
                 if(response.isSuccessful()) {
                     mylist_for_search.clear();
@@ -213,7 +213,7 @@ public class SearchByIngredientsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<UserResponse>> call, Throwable t) {
+            public void onFailure(Call<List<AutoComplete_ingredients>> call, Throwable t) {
                 Toast.makeText(getContext(), "Check Your Internet!", Toast.LENGTH_SHORT).show();
             }
         });

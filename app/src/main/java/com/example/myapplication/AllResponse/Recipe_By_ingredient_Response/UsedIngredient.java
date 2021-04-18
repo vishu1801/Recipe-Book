@@ -1,4 +1,4 @@
-package com.example.myapplication.AllResponse;
+package com.example.myapplication.AllResponse.Recipe_By_ingredient_Response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

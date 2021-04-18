@@ -11,12 +11,11 @@ import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DecideFragment extends AppCompatActivity {
-    String view_recipe="false";
+    String ingredients="abc";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_decide_fragment);
-        view_recipe=getIntent().getStringExtra("view_recipe");
         BottomNavigationView bottomnav = findViewById(R.id.bottom_nav);
         bottomnav.setOnNavigationItemSelectedListener(navlistner);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_nav,new SearchByIngredientsFragment()).commit();
@@ -31,6 +30,9 @@ public class DecideFragment extends AppCompatActivity {
                         break;
                     case R.id.nav_search_by_recipes:
                         selectedfragment = new SearchByRecipesFragment();
+                        Bundle args = new Bundle();
+                        args.putString("ingredient", ingredients);
+                        selectedfragment.setArguments(args);
                         break;
                     case R.id.nav_fav:
                         selectedfragment = new FavoriteFragment();
