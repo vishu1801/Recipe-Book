@@ -1,9 +1,11 @@
 package com.example.myapplication.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.Unuse
 import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.UsedIngredient;
 import com.example.myapplication.Custom_Adapter.Recipe_list_view_Adapter;
 import com.example.myapplication.R;
+import com.example.myapplication.Recipe_Details;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +45,14 @@ public class FavoriteFragment extends Fragment {
         listView= root_view.findViewById(R.id.fav_list_view);
         adapter=new Recipe_list_view_Adapter(getActivity(),R.layout.list_view_item_for_recipe,mylist);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), Recipe_Details.class);
+                intent.putExtra("id",mylist.get(position).getId());
+                startActivity(intent);
+            }
+        });
         reff = FirebaseDatabase.getInstance().getReference().child("Favorites").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         reff.addValueEventListener(new ValueEventListener() {
             @Override

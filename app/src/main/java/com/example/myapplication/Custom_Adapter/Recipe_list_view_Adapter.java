@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.RecipeResponse;
-import com.example.myapplication.List_recipe;
 import com.example.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +25,6 @@ public class Recipe_list_view_Adapter extends ArrayAdapter<RecipeResponse> {
     Context mcontext;
     int mresource;
     ArrayList<RecipeResponse> my_list;
-    ArrayList<List_recipe> my_list1;
     ImageView fav1;
     DatabaseReference reference;
     public Recipe_list_view_Adapter(@NonNull Context context, int resource, @NonNull ArrayList<RecipeResponse> objects) {
@@ -43,11 +41,7 @@ public class Recipe_list_view_Adapter extends ArrayAdapter<RecipeResponse> {
         convertView=layoutInflater.inflate(mresource,parent,false);
 
 
-        my_list1=new ArrayList<List_recipe>();
-        for(int i=0;i<my_list.size();i++){
-            List_recipe list = new List_recipe(my_list.get(i).getId());
-            my_list1.add(list);
-        }
+
         String name=getItem(position).getTitle();
         String image=getItem(position).getImage();
         Integer missedIngredient=getItem(position).getMissedIngredientCount();
@@ -58,16 +52,12 @@ public class Recipe_list_view_Adapter extends ArrayAdapter<RecipeResponse> {
         fav1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(my_list1.get(position).isIsclicked()) {
-                    Toast.makeText(mcontext, "true", Toast.LENGTH_SHORT).show();
-                    my_list1.get(position).setIsclicked(false);
-                    fav1.setImageResource(R.drawable.favorite);
-                    remove_from_favorite(position);
-                }else{
-                    Toast.makeText(mcontext, "false", Toast.LENGTH_SHORT).show();
-                    my_list1.get(position).setIsclicked(true);
+                if(fav1.getTag()=="fav1") {
                     fav1.setImageResource(R.drawable.red_heart);
                     add_to_favorite(position);
+                }else{
+                    fav1.setImageResource(R.drawable.favorite);
+                    remove_from_favorite(position);
                 }
             }
         });
