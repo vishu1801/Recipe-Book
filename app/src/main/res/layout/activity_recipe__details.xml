@@ -2,7 +2,6 @@
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/activity_recipe__details_scene"
@@ -13,12 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/temp"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/textView"
-        android:textSize="200sp"
-        android:textColor="@color/black"/>
+        android:layout_height="wrap_content"
+        android:text="571132"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:id="@+id/textview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_image_view"/>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
