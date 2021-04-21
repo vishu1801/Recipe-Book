@@ -4,6 +4,7 @@ import com.example.myapplication.AllResponse.AutoComplete_ingredients;
 import com.example.myapplication.AllResponse.AutoComplete_recipes;
 import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.RecipeResponse;
 import com.example.myapplication.AllResponse.Recipe_Step_Response.Recipe_steps;
+import com.example.myapplication.AllResponse.Recipe_details_response.Recipe_details_Response;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import retrofit2.http.Query;
 import static com.example.myapplication.API.Recipes_url.autocomplete_recipes;
 import static com.example.myapplication.API.Recipes_url.get_Ingredients;
 import static com.example.myapplication.API.Recipes_url.get_Recipe_by_Ingredients;
+import static com.example.myapplication.API.Recipes_url.recipe_details;
 import static com.example.myapplication.API.Recipes_url.recipe_steps;
 
 public interface UserService {
@@ -37,4 +39,9 @@ public interface UserService {
     @GET(recipe_steps)
     Call<Recipe_steps> recipe_step (@Query("apiKey") String apkiKey,
                                     @Path("id") int id);
+
+
+    @GET(recipe_details)
+    Call<Recipe_details_Response> recipe_detail_response (@Path("id") int id,
+                                                          @Query("apiKey") String apkiKey);
 }
