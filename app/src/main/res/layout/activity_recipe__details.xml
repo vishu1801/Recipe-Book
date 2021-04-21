@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="?attr/color"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             android:id="@+id/collapse_toolbar"
             app:title="@string/app_name">
@@ -62,7 +62,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:lineSpacingExtra="10dp"
                 android:id="@+id/description_text"/>
         </LinearLayout>
