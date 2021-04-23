@@ -37,8 +37,8 @@ public interface UserService {
                                                            @Query("number") int number);
 
     @GET(recipe_steps)
-    Call<Recipe_steps> recipe_step (@Query("apiKey") String apkiKey,
-                                    @Path("id") int id);
+    Call<List<Recipe_steps>> recipe_step (@Path("id") int id,
+                                          @Query("apiKey") String apkiKey);
 
 
     @GET(recipe_details)
