@@ -26,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Ingredient_lis_for_pantry_adapter extends ArrayAdapter<AutoComplete_ingredients> {
+public class    Ingredient_lis_for_pantry_adapter extends ArrayAdapter<AutoComplete_ingredients> {
     Context mContext;
     int mResource;
     ArrayList<AutoComplete_ingredients> list_for_pantry;
