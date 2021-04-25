@@ -3,7 +3,7 @@ package com.example.myapplication.AllResponse.Recipe_Step_Response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Recipe_steps {
     @SerializedName("name")
@@ -11,7 +11,7 @@ public class Recipe_steps {
     private String name;
     @SerializedName("steps")
     @Expose
-    private List<Step> steps = null;
+    private ArrayList<Step> steps = null;
 
     public String getName() {
         return name;
@@ -21,11 +21,11 @@ public class Recipe_steps {
         this.name = name;
     }
 
-    public List<Step> getSteps() {
+    public ArrayList<Step> getSteps() {
         return steps;
     }
 
-    public void setSteps(List<Step> steps) {
+    public void setSteps(ArrayList<Step> steps) {
         this.steps = steps;
     }
 

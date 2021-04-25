@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.API.ApiClient;
 import com.example.myapplication.AllResponse.Recipe_Step_Response.Recipe_steps;
@@ -26,8 +27,9 @@ public class Steps extends Fragment {
 
     private String recipe_id;
     private ArrayList<Recipe_steps> data;
-    private ListView listView;
-    private Steps_listView_Adapter steps_listView_adapter;
+    private RecyclerView recyclerView;
+    private Steps_recycler_Adapter adapter;
+    private TextView nostep;
 
     public Steps (String id){
         this.recipe_id = id;
@@ -39,14 +41,13 @@ public class Steps extends Fragment {
         View parent_view = inflater.inflate(R.layout.fragment_steps, container, false);
         View root_view = inflater.inflate(R.layout.fragment_steps,null);
 
-        //init
-        data=new ArrayList<Recipe_steps>();
-        listView=root_view.findViewById(R.id.steps_listview);
-        steps_listView_adapter=new Steps_listView_Adapter(getContext(),R.layout.steps_recyclerview_item,data);
 
+        data = new ArrayList<Recipe_steps>();
+        recyclerView = root_view.findViewById(R.id.step_recyclerview);
+        adapter=new Steps_recycler_Adapter(data,getContext());
+        recyclerView.setAdapter(adapter);
 
-        //set adapter
-        listView.setAdapter(steps_listView_adapter);
+        nostep=root_view.findViewById(R.id.nostep);
 
 
         Call<List<Recipe_steps>> recipe_stepsCall = ApiClient.getUserService().recipe_step(Integer.parseInt(recipe_id),apiKey);
@@ -54,9 +55,12 @@ public class Steps extends Fragment {
             @Override
             public void onResponse(Call<List<Recipe_steps>> call, Response<List<Recipe_steps>> response) {
                 if(response.isSuccessful()){
-                    data.clear();
-                    data.addAll(response.body());
-                    steps_listView_adapter.notifyDataSetChanged();
+                    if(response.body().isEmpty()){
+                        nostep.setVisibility(View.VISIBLE);
+                    }else {
+                        data.addAll(response.body());
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
 
