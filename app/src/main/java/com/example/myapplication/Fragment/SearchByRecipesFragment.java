@@ -1,9 +1,11 @@
 package com.example.myapplication.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.Recip
 import com.example.myapplication.Custom_Adapter.AutoCompleteRecipesAdapter;
 import com.example.myapplication.Custom_Adapter.Recipe_list_view_Adapter;
 import com.example.myapplication.R;
+import com.example.myapplication.Recipe_Details;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,7 @@ import retrofit2.Response;
 import static com.example.myapplication.API.Recipes_url.apiKey;
 
 public class SearchByRecipesFragment extends Fragment {
-    ListView listView_for_ingredient;
+    ListView listView_for_ingredient,listView_for_autocomplete;
     Recipe_list_view_Adapter recipe_list_view_adapter;
     ArrayList<RecipeResponse> mylist;
     ArrayList<AutoComplete_recipes> autoComplete_recipes;
@@ -46,6 +49,7 @@ public class SearchByRecipesFragment extends Fragment {
         String ingredient=getArguments().getString("ingredient");
         textView = root_view.findViewById(R.id.text_view);
         listView_for_ingredient = (ListView) root_view.findViewById(R.id.ingredient_related_recipe);
+        listView_for_autocomplete = (ListView) root_view.findViewById(R.id.ingredient_related_recipe);
 
         if(ingredient == "abc"){
             searchView = root_view.findViewById(R.id.search_view_recipe);
@@ -53,7 +57,7 @@ public class SearchByRecipesFragment extends Fragment {
             textView.setText("Some Random Recipes");
             autoComplete_recipes = new ArrayList<AutoComplete_recipes>();
             recipeadapter=new AutoCompleteRecipesAdapter(getActivity(),R.layout.ingredient_list_item,autoComplete_recipes);
-            listView_for_ingredient.setAdapter(recipeadapter);
+            listView_for_autocomplete.setAdapter(recipeadapter);
             View v = root_view.findViewById(R.id.line);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -81,6 +85,9 @@ public class SearchByRecipesFragment extends Fragment {
             recipe_by_ingredient(ingredient);
         }
 
+//
+        
+
         return root_view;
     }
 
@@ -104,6 +111,14 @@ public class SearchByRecipesFragment extends Fragment {
             @Override
             public void onFailure(Call<List<RecipeResponse>> call, Throwable t) {
 
+            }
+        });
+        listView_for_ingredient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), Recipe_Details.class);
+                intent.putExtra("id",mylist.get(position).getId());
+                startActivity(intent);
             }
         });
     }
