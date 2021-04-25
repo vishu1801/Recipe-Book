@@ -36,10 +36,12 @@
         android:layout_above="@+id/view_recipe"/>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@drawable/button_design"
         android:text="View Recipes"
         android:id="@+id/view_recipe"
+        android:layout_centerInParent="true"
         android:textSize="20sp"
         android:layout_alignParentBottom="true"/>
 

@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/remove_ingredient"
         android:layout_alignParentRight="true"
+        android:backgroundTint="@drawable/button_design"
         android:text="Remove"
         />
 
