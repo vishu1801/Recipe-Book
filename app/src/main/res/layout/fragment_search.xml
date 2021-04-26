@@ -7,16 +7,26 @@
     <androidx.appcompat.widget.SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/search_view"
+        android:id="@+id/search_view_ingredient"
         app:queryHint="Add Ingredient"
         android:inputType="text"
         app:iconifiedByDefault="false"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_view_ingredient"
+        android:visibility="gone"
+        android:layout_margin="10dp"
+        android:id="@+id/ingredient_response"/>
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/your_ingredient_text"
-        android:layout_below="@+id/search_view"
+        android:layout_below="@+id/search_view_ingredient"
         android:text="Your Ingredients"
         android:textAlignment="center"
         android:textSize="30sp"/>
