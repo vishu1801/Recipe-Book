@@ -173,6 +173,7 @@ public class SearchByIngredientsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Ingredients_response>> call, Response<List<Ingredients_response>> response) {
                 if(response.isSuccessful()){
+                    ingredient_from_response.clear();
                     ingredient_from_response.addAll(response.body());
                     autoComplete_ingredient_adapter=new AutoComplete_ingredient_adapter(getContext(),getActivity(),ingredient_from_response);
                     recyclerView_for_ingredient_response.setLayoutManager(new LinearLayoutManager(getContext()));

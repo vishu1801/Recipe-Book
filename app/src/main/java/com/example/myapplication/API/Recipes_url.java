@@ -11,4 +11,5 @@ public interface Recipes_url {
     public String recipe_steps = Base_Url + "/recipes/{id}/analyzedInstructions";
     public String recipe_details = Base_Url + "/recipes/{id}/information";
     public String recipe_ingredients = Base_Url + "/recipes/{id}/ingredientWidget.json";
+    public String similar_recipes = Base_Url + "/recipes/{id}/similar";
 }

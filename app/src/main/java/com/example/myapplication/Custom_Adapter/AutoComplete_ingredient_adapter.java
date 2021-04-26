@@ -22,6 +22,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 public class AutoComplete_ingredient_adapter extends RecyclerView.Adapter<AutoComplete_ingredient_adapter.ViewHolder> {
     Context mcontext;
     Activity mactivity;
@@ -87,6 +89,7 @@ public class AutoComplete_ingredient_adapter extends RecyclerView.Adapter<AutoCo
         autoCompleteingredients.setImage(autoComplete_ingredient_list.get(position).getImage());
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Ingredients").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         reference.push().setValue(autoCompleteingredients);
+        Toasty.success(mcontext,"Ingredient Added",Toasty.LENGTH_SHORT,true).show();
         Toast.makeText(mcontext, "Ingredient Added Successfully.", Toast.LENGTH_SHORT).show();
     }
 }

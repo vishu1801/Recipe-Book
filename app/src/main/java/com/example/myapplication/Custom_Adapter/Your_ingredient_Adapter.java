@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 public class Your_ingredient_Adapter extends RecyclerView.Adapter<Your_ingredient_Adapter.ViewHolder> {
 
@@ -99,7 +100,7 @@ public class Your_ingredient_Adapter extends RecyclerView.Adapter<Your_ingredien
                 for (DataSnapshot snapshot1:snapshot.getChildren()){
                     snapshot1.getRef().removeValue();
                 }
-                Toast.makeText(mcontext, "Ingredient deleted", Toast.LENGTH_SHORT).show();
+                Toasty.success(mcontext,"Ingredient Removed",Toasty.LENGTH_SHORT,true).show();
             }
 
             @Override
