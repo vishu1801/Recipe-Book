@@ -21,19 +21,12 @@
         android:textAlignment="center"
         android:textSize="30sp"/>
 
-    <ListView
-        android:id="@+id/list_item_for_search"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:layout_below="@+id/search_view" />
-
-    <ListView
-        android:id="@+id/list_item_for_pantry"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/your_ingredient"
         android:layout_below="@+id/your_ingredient_text"
-        android:layout_above="@+id/view_recipe"/>
+        android:layout_margin="20dp"/>
 
     <Button
         android:layout_width="wrap_content"

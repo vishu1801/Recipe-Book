@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
-import com.example.myapplication.AllResponse.AutoComplete_ingredients;
+import com.example.myapplication.AllResponse.Ingredients_response;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,12 +26,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class    Ingredient_lis_for_pantry_adapter extends ArrayAdapter<AutoComplete_ingredients> {
+public class    Ingredient_lis_for_pantry_adapter extends ArrayAdapter<Ingredients_response> {
     Context mContext;
     int mResource;
-    ArrayList<AutoComplete_ingredients> list_for_pantry;
+    ArrayList<Ingredients_response> list_for_pantry;
     Button remove;
-    public Ingredient_lis_for_pantry_adapter(@NonNull Context context, int resource, @NonNull ArrayList<AutoComplete_ingredients> objects) {
+    public Ingredient_lis_for_pantry_adapter(@NonNull Context context, int resource, @NonNull ArrayList<Ingredients_response> objects) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;

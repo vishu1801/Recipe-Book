@@ -1,6 +1,6 @@
 package com.example.myapplication.AllResponse;
 
-public class AutoComplete_ingredients {
+public class Ingredients_response {
     public String name;
     public String image;
 

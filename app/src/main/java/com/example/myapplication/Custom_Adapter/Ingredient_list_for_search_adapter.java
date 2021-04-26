@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
-import com.example.myapplication.AllResponse.AutoComplete_ingredients;
+import com.example.myapplication.AllResponse.Ingredients_response;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,13 +22,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Ingredient_list_for_search_adapter extends ArrayAdapter<AutoComplete_ingredients> {
+public class Ingredient_list_for_search_adapter extends ArrayAdapter<Ingredients_response> {
 
     private Context mcontext;
     int mResource;
-    ArrayList<AutoComplete_ingredients> list;
+    ArrayList<Ingredients_response> list;
     DatabaseReference reference;
-    public Ingredient_list_for_search_adapter(@NonNull Context context, int resource, @NonNull ArrayList<AutoComplete_ingredients> objects) {
+    public Ingredient_list_for_search_adapter(@NonNull Context context, int resource, @NonNull ArrayList<Ingredients_response> objects) {
         super(context, resource, objects);
         mcontext=context;
         mResource=resource;
@@ -54,7 +54,7 @@ public class Ingredient_list_for_search_adapter extends ArrayAdapter<AutoComplet
         add_ingredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AutoComplete_ingredients autoCompleteingredients = new AutoComplete_ingredients();
+                Ingredients_response autoCompleteingredients = new Ingredients_response();
                 autoCompleteingredients.setName(list.get(position).getName());
                 autoCompleteingredients.setImage(list.get(position).getImage());
                 reference= FirebaseDatabase.getInstance().getReference().child("Ingredients").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
