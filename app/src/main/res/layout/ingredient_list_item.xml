@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
 
     <ImageView
         android:layout_width="100dp"
@@ -17,7 +18,7 @@
         android:layout_toStartOf="@+id/add_ingredient"
         android:id="@+id/ingredient_name"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
+        android:textAlignment="center"
         android:textSize="30sp"/>
     <Button
         android:layout_width="wrap_content"

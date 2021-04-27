@@ -9,10 +9,17 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        app:queryHint="Search Recipe"
-       android:id="@+id/search_view_recipe"
+       android:id="@+id/recipe_searchview"
        android:inputType="text"
        app:iconifiedByDefault="false"
        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recipe_search"
+        android:visibility="gone" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +28,7 @@
         android:textColor="@color/black"
         android:textAlignment="center"
         />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -28,10 +36,11 @@
         android:layout_marginHorizontal="10sp"
         android:layout_marginTop="10sp"
         android:id="@+id/line"/>
-    <ListView
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ingredient_related_recipe"
-        android:layout_marginHorizontal="15sp"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/random_recipe"
+        />
 
 </LinearLayout>
