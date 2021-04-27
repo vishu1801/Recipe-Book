@@ -42,5 +42,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/random_recipe"
         />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/your_ingredient_recipe"
+        android:visibility="gone"
+        android:layout_marginHorizontal="10dp"
+        />
 
 </LinearLayout>

@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.API.ApiClient;
 import com.example.myapplication.AllResponse.AutoComplete_recipes;
+import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.RecipeResponse;
 import com.example.myapplication.Custom_Adapter.AutoComplete_recipe_Adapter;
+import com.example.myapplication.Custom_Adapter.Recipes_Adapter;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -32,9 +34,11 @@ public class SearchByRecipesFragment extends Fragment {
 
     String ingredient;
     SearchView recipe_search;
-    RecyclerView autocomplete_recipe;
+    RecyclerView autocomplete_recipe,random_recipes,your_ingredient_recipes;
     ArrayList<AutoComplete_recipes> autoComplete_recipes_list;
+    ArrayList<RecipeResponse> recipeResponse;
     AutoComplete_recipe_Adapter autoComplete_recipe_adapter;
+    Recipes_Adapter recipes_adapter;
     TextView textview;
     View line;
 
@@ -48,6 +52,7 @@ public class SearchByRecipesFragment extends Fragment {
         init(root_view);
 
         if(ingredient == "abc"){
+            textview.setText("Some Random Recipes");
             recipe_search.setVisibility(View.VISIBLE);
             autocomplete_recipe.setVisibility(View.VISIBLE);
             recipe_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -65,6 +70,7 @@ public class SearchByRecipesFragment extends Fragment {
                     }else{
                         textview.setVisibility(View.VISIBLE);
                         line.setVisibility(View.VISIBLE);
+                        autocomplete_recipe.setVisibility(View.GONE);
                     }
                     return true;
                 }
@@ -72,6 +78,9 @@ public class SearchByRecipesFragment extends Fragment {
 
         }
         else {
+            textview.setText("Recipes By Your Ingredients");
+            your_ingredient_recipes.setVisibility(View.VISIBLE);
+            get_recipes(ingredient);
         }
 
         return root_view;
@@ -83,6 +92,8 @@ public class SearchByRecipesFragment extends Fragment {
         textview=root.findViewById(R.id.text_view);
         line=root.findViewById(R.id.line);
         autoComplete_recipes_list=new ArrayList<>();
+        your_ingredient_recipes=root.findViewById(R.id.your_ingredient_recipe);
+        recipeResponse=new ArrayList<>();
     }
 
     private void get_autocomplete_recipe(String newText){
@@ -105,6 +116,33 @@ public class SearchByRecipesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<AutoComplete_recipes>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void get_recipes(String ingredients){
+        Call<List<RecipeResponse>> recipe_response_call = ApiClient.getUserService().get_recipe_by_Ingredients(apiKey,ingredients,20);
+        recipe_response_call.enqueue(new Callback<List<RecipeResponse>>() {
+            @Override
+            public void onResponse(Call<List<RecipeResponse>> call, Response<List<RecipeResponse>> response) {
+                if(response.isSuccessful()){
+                    if(response.body().size()>0){
+                        recipeResponse.clear();
+                        recipeResponse.addAll(response.body());
+                        recipes_adapter=new Recipes_Adapter(getContext(),getActivity(),recipeResponse);
+                        your_ingredient_recipes.setLayoutManager(new LinearLayoutManager(getContext()));
+                        your_ingredient_recipes.setAdapter(recipes_adapter);
+                    }else{
+                        Toasty.info(getContext(),"Sorry! No recipe Found by your ingredient",Toasty.LENGTH_LONG,true).show();
+                    }
+                }else{
+                    Toasty.error(getContext(),"Some Techinal issue Please Try after some time.",Toasty.LENGTH_LONG,true).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RecipeResponse>> call, Throwable t) {
 
             }
         });
