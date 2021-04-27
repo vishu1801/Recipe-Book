@@ -22,11 +22,13 @@ public class Recipes_Adapter extends RecyclerView.Adapter<Recipes_Adapter.ViewHo
     Context mcontext;
     Activity mactivity;
     ArrayList<RecipeResponse> recipes_list;
+    private onRecipeListener onRecipeListener;
 
-    public Recipes_Adapter(@NonNull Context context, Activity activity, ArrayList<RecipeResponse> data) {
+    public Recipes_Adapter(@NonNull Context context, Activity activity, ArrayList<RecipeResponse> data,onRecipeListener onRecipeListener) {
         this.mcontext=context;
         this.mactivity=activity;
         this.recipes_list=data;
+        this.onRecipeListener=onRecipeListener;
     }
 
     @NonNull
@@ -35,7 +37,7 @@ public class Recipes_Adapter extends RecyclerView.Adapter<Recipes_Adapter.ViewHo
 
         View view = LayoutInflater.from(mcontext).inflate(R.layout.list_view_item_for_recipe,parent,false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view,onRecipeListener);
     }
 
     @Override
@@ -59,16 +61,29 @@ public class Recipes_Adapter extends RecyclerView.Adapter<Recipes_Adapter.ViewHo
             return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView recipe_image,add_fav;
         TextView recipe_title,missed_ingr;
+        onRecipeListener onRecipeListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, onRecipeListener onRecipeListener) {
             super(itemView);
             recipe_image=itemView.findViewById(R.id.image_view_for_recipe);
             recipe_title=itemView.findViewById(R.id.recipe_title);
             missed_ingr=itemView.findViewById(R.id.missed_ingredient);
+            this.onRecipeListener=onRecipeListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onRecipeListener.onRecipeClick(getAdapterPosition());
+        }
+    }
+
+    public interface onRecipeListener{
+        void onRecipeClick(int position);
     }
 }

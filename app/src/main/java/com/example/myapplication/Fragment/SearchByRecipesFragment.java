@@ -1,5 +1,6 @@
 package com.example.myapplication.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.Recip
 import com.example.myapplication.Custom_Adapter.AutoComplete_recipe_Adapter;
 import com.example.myapplication.Custom_Adapter.Recipes_Adapter;
 import com.example.myapplication.R;
+import com.example.myapplication.Recipe_Details;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ import retrofit2.Response;
 
 import static com.example.myapplication.API.Recipes_url.apiKey;
 
-public class SearchByRecipesFragment extends Fragment {
+public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter.onRecipeListener {
 
     String ingredient;
     SearchView recipe_search;
@@ -130,7 +132,7 @@ public class SearchByRecipesFragment extends Fragment {
                     if(response.body().size()>0){
                         recipeResponse.clear();
                         recipeResponse.addAll(response.body());
-                        recipes_adapter=new Recipes_Adapter(getContext(),getActivity(),recipeResponse);
+                        recipes_adapter=new Recipes_Adapter(getContext(),getActivity(),recipeResponse,SearchByRecipesFragment.this::onRecipeClick);
                         your_ingredient_recipes.setLayoutManager(new LinearLayoutManager(getContext()));
                         your_ingredient_recipes.setAdapter(recipes_adapter);
                     }else{
@@ -146,5 +148,12 @@ public class SearchByRecipesFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onRecipeClick(int position) {
+        Intent intent = new Intent(getContext(), Recipe_Details.class);
+        intent.putExtra("id",recipeResponse.get(position).getId());
+        startActivity(intent);
     }
 }
