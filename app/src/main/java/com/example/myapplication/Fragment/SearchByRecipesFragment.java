@@ -34,7 +34,7 @@ import retrofit2.Response;
 
 import static com.example.myapplication.API.Recipes_url.apiKey;
 
-public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter.onRecipeListener {
+public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter.onRecipeListener,Random_recipe_Adapter.OnRandomRecipeListner,AutoComplete_recipe_Adapter.OnAutoCompleteListener {
 
     String ingredient;
     SearchView recipe_search;
@@ -107,7 +107,7 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
 
         //setting adapter
 
-        autoComplete_recipe_adapter=new AutoComplete_recipe_Adapter(getContext(),getActivity(),autoComplete_recipes_list);
+        autoComplete_recipe_adapter=new AutoComplete_recipe_Adapter(getContext(),getActivity(),autoComplete_recipes_list,SearchByRecipesFragment.this::OnAutoCompleteclick);
         autocomplete_recipe.setLayoutManager(new LinearLayoutManager(getContext()));
         autocomplete_recipe.setAdapter(autoComplete_recipe_adapter);
 
@@ -115,7 +115,7 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
         your_ingredient_recipes.setLayoutManager(new LinearLayoutManager(getContext()));
         your_ingredient_recipes.setAdapter(recipes_adapter);
 
-        random_recipe_adapter=new Random_recipe_Adapter(getContext(),getActivity(),random_recipe_response);
+        random_recipe_adapter=new Random_recipe_Adapter(getContext(),getActivity(),random_recipe_response,SearchByRecipesFragment.this::OnRandomRecipeclick);
         random_recipes.setLayoutManager(new LinearLayoutManager(getContext()));
         random_recipes.setAdapter(random_recipe_adapter);
 
@@ -199,6 +199,20 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
     public void onRecipeClick(int position) {
         Intent intent = new Intent(getContext(), Recipe_Details.class);
         intent.putExtra("id",recipeResponse.get(position).getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void OnRandomRecipeclick(int position) {
+        Intent intent = new Intent(getContext(), Recipe_Details.class);
+        intent.putExtra("id",random_recipe_response.get(0).getRecipes().get(position).getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void OnAutoCompleteclick(int position) {
+        Intent intent = new Intent(getContext(), Recipe_Details.class);
+        intent.putExtra("id",autoComplete_recipes_list.get(position).getId());
         startActivity(intent);
     }
 }

@@ -19,14 +19,16 @@ import java.util.ArrayList;
 
 public class AutoComplete_recipe_Adapter extends RecyclerView.Adapter<AutoComplete_recipe_Adapter.ViewHolder> {
 
-    Context mcontext;
-    Activity mactivity;
-    ArrayList<AutoComplete_recipes> autoComplete_recipes;
+    private Context mcontext;
+    private Activity mactivity;
+    private ArrayList<AutoComplete_recipes> autoComplete_recipes;
+    private OnAutoCompleteListener onAutoCompleteListener;
 
-    public AutoComplete_recipe_Adapter(@NonNull Context context, Activity activity, ArrayList<AutoComplete_recipes> data) {
+    public AutoComplete_recipe_Adapter(@NonNull Context context, Activity activity, ArrayList<AutoComplete_recipes> data,OnAutoCompleteListener onAutoCompleteListener) {
         this.mcontext=context;
         this.mactivity=activity;
         this.autoComplete_recipes=data;
+        this.onAutoCompleteListener=onAutoCompleteListener;
     }
 
     @NonNull
@@ -35,7 +37,7 @@ public class AutoComplete_recipe_Adapter extends RecyclerView.Adapter<AutoComple
 
         View view = LayoutInflater.from(mcontext).inflate(R.layout.autocomplete_ingredient,parent,false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view,onAutoCompleteListener);
     }
 
     @Override
@@ -58,16 +60,28 @@ public class AutoComplete_recipe_Adapter extends RecyclerView.Adapter<AutoComple
             return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView recipe_image;
         TextView recipe_title;
+        OnAutoCompleteListener onAutoCompleteListener;
 
-
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView,OnAutoCompleteListener onAutoCompleteListener) {
             super(itemView);
             recipe_image = itemView.findViewById(R.id.autocomplete_recipe_image);
             recipe_title = itemView.findViewById(R.id.autocomplete_recipe_title);
+            this.onAutoCompleteListener=onAutoCompleteListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onAutoCompleteListener.OnAutoCompleteclick(getAdapterPosition());
+        }
+    }
+
+    public interface OnAutoCompleteListener{
+        void OnAutoCompleteclick(int position);
     }
 }

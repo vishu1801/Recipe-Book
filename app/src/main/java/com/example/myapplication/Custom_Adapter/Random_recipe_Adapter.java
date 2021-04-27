@@ -19,14 +19,16 @@ import java.util.ArrayList;
 
 public class Random_recipe_Adapter extends RecyclerView.Adapter<Random_recipe_Adapter.ViewHolder> {
 
-    Context mcontext;
-    Activity mactivity;
-    ArrayList<Random_Recipe_response> random_recipes_list;
+    private Context mcontext;
+    private Activity mactivity;
+    private ArrayList<Random_Recipe_response> random_recipes_list;
+    private OnRandomRecipeListner onRandomRecipeListner;
 
-    public Random_recipe_Adapter(@NonNull Context context, Activity activity, ArrayList<Random_Recipe_response> data) {
+    public Random_recipe_Adapter(@NonNull Context context, Activity activity, ArrayList<Random_Recipe_response> data,OnRandomRecipeListner randomRecipeListner) {
         this.mcontext=context;
         this.mactivity=activity;
         this.random_recipes_list=data;
+        this.onRandomRecipeListner=randomRecipeListner;
     }
 
     @NonNull
@@ -35,7 +37,7 @@ public class Random_recipe_Adapter extends RecyclerView.Adapter<Random_recipe_Ad
 
         View view = LayoutInflater.from(mcontext).inflate(R.layout.list_view_item_for_recipe,parent,false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view,onRandomRecipeListner);
     }
 
     @Override
@@ -58,15 +60,29 @@ public class Random_recipe_Adapter extends RecyclerView.Adapter<Random_recipe_Ad
             return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView recipe_image;
         TextView recipe_title;
+        OnRandomRecipeListner randomRecipeListner;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView,OnRandomRecipeListner randomRecipeListner) {
             super(itemView);
             recipe_image=itemView.findViewById(R.id.image_view_for_recipe);
             recipe_title=itemView.findViewById(R.id.recipe_title);
+            this.randomRecipeListner=randomRecipeListner;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            randomRecipeListner.OnRandomRecipeclick(getAdapterPosition());
         }
     }
+
+    public interface OnRandomRecipeListner{
+        void OnRandomRecipeclick(int position);
+    }
+
 }
