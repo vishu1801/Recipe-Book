@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.API.ApiClient;
 import com.example.myapplication.AllResponse.AutoComplete_recipes;
+import com.example.myapplication.AllResponse.Random_recipe.Random_Recipe_response;
 import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.RecipeResponse;
 import com.example.myapplication.Custom_Adapter.AutoComplete_recipe_Adapter;
+import com.example.myapplication.Custom_Adapter.Random_recipe_Adapter;
 import com.example.myapplication.Custom_Adapter.Recipes_Adapter;
 import com.example.myapplication.R;
 import com.example.myapplication.Recipe_Details;
@@ -39,8 +41,10 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
     RecyclerView autocomplete_recipe,random_recipes,your_ingredient_recipes;
     ArrayList<AutoComplete_recipes> autoComplete_recipes_list;
     ArrayList<RecipeResponse> recipeResponse;
+    ArrayList<Random_Recipe_response> random_recipe_response;
     AutoComplete_recipe_Adapter autoComplete_recipe_adapter;
     Recipes_Adapter recipes_adapter;
+    Random_recipe_Adapter random_recipe_adapter;
     TextView textview;
     View line;
 
@@ -56,7 +60,7 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
         if(ingredient == "abc"){
             textview.setText("Some Random Recipes");
             recipe_search.setVisibility(View.VISIBLE);
-            autocomplete_recipe.setVisibility(View.VISIBLE);
+            random_recipes();
             recipe_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
@@ -68,6 +72,7 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
                     if(newText.length()>0){
                         textview.setVisibility(View.GONE);
                         line.setVisibility(View.GONE);
+                        autocomplete_recipe.setVisibility(View.VISIBLE);
                         get_autocomplete_recipe(newText);
                     }else{
                         textview.setVisibility(View.VISIBLE);
@@ -96,6 +101,25 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
         autoComplete_recipes_list=new ArrayList<>();
         your_ingredient_recipes=root.findViewById(R.id.your_ingredient_recipe);
         recipeResponse=new ArrayList<>();
+        random_recipes=root.findViewById(R.id.random_recipe_recycler);
+        random_recipe_response=new ArrayList<>();
+
+
+        //setting adapter
+
+        autoComplete_recipe_adapter=new AutoComplete_recipe_Adapter(getContext(),getActivity(),autoComplete_recipes_list);
+        autocomplete_recipe.setLayoutManager(new LinearLayoutManager(getContext()));
+        autocomplete_recipe.setAdapter(autoComplete_recipe_adapter);
+
+        recipes_adapter=new Recipes_Adapter(getContext(),getActivity(),recipeResponse,SearchByRecipesFragment.this::onRecipeClick);
+        your_ingredient_recipes.setLayoutManager(new LinearLayoutManager(getContext()));
+        your_ingredient_recipes.setAdapter(recipes_adapter);
+
+        random_recipe_adapter=new Random_recipe_Adapter(getContext(),getActivity(),random_recipe_response);
+        random_recipes.setLayoutManager(new LinearLayoutManager(getContext()));
+        random_recipes.setAdapter(random_recipe_adapter);
+
+
     }
 
     private void get_autocomplete_recipe(String newText){
@@ -109,9 +133,7 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
                     }else{
                         autoComplete_recipes_list.clear();
                         autoComplete_recipes_list.addAll(response.body());
-                        autoComplete_recipe_adapter=new AutoComplete_recipe_Adapter(getContext(),getActivity(),autoComplete_recipes_list);
-                        autocomplete_recipe.setLayoutManager(new LinearLayoutManager(getContext()));
-                        autocomplete_recipe.setAdapter(autoComplete_recipe_adapter);
+                        autoComplete_recipe_adapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -132,9 +154,7 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
                     if(response.body().size()>0){
                         recipeResponse.clear();
                         recipeResponse.addAll(response.body());
-                        recipes_adapter=new Recipes_Adapter(getContext(),getActivity(),recipeResponse,SearchByRecipesFragment.this::onRecipeClick);
-                        your_ingredient_recipes.setLayoutManager(new LinearLayoutManager(getContext()));
-                        your_ingredient_recipes.setAdapter(recipes_adapter);
+                        recipes_adapter.notifyDataSetChanged();
                     }else{
                         Toasty.info(getContext(),"Sorry! No recipe Found by your ingredient",Toasty.LENGTH_LONG,true).show();
                     }
@@ -145,6 +165,31 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
 
             @Override
             public void onFailure(Call<List<RecipeResponse>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void random_recipes(){
+        Call<Random_Recipe_response> random_recipe_call = ApiClient.getUserService().get_random_recipes(apiKey,"vegetarian,lunch,dinner",20);
+        random_recipe_call.enqueue(new Callback<Random_Recipe_response>() {
+            @Override
+            public void onResponse(Call<Random_Recipe_response> call, Response<Random_Recipe_response> response) {
+                if(response.isSuccessful()){
+                    if (response.body().equals("")){
+                        Toasty.error(getContext(),"No Random recipes Found",Toasty.LENGTH_SHORT,true).show();
+                    }else{
+                        random_recipe_response.clear();
+                        random_recipe_response.add(response.body());
+                        random_recipe_adapter.notifyDataSetChanged();
+                    }
+                }else{
+                    Toasty.error(getContext(),"Some Techinal issue Please Try after some time.",Toasty.LENGTH_LONG,true).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call <Random_Recipe_response> call, Throwable t) {
 
             }
         });

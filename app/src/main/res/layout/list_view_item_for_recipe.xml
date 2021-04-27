@@ -34,7 +34,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="missed ingredients"
                 android:id="@+id/missed_ingredient"
                 android:textSize="10sp"
                 android:layout_below="@id/recipe_title"/>
