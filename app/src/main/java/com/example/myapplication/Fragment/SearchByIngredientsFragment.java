@@ -160,7 +160,7 @@ public class SearchByIngredientsFragment extends Fragment {
 
 
     private void auto_complete_ingredient(String newText){
-        Call<List<Ingredients_response>> ingredient_call = ApiClient.getUserService().get_ingredients(apiKey,newText,20);
+        Call<List<Ingredients_response>> ingredient_call = ApiClient.getUserService().get_ingredients(apiKey,newText,10);
         ingredient_call.enqueue(new Callback<List<Ingredients_response>>() {
             @Override
             public void onResponse(Call<List<Ingredients_response>> call, Response<List<Ingredients_response>> response) {

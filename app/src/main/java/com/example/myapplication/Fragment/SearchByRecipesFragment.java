@@ -123,7 +123,7 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
     }
 
     private void get_autocomplete_recipe(String newText){
-        Call<List<AutoComplete_recipes>> autocomplete_recipe_call = ApiClient.getUserService().auto_complete_recipes(apiKey,newText,20);
+        Call<List<AutoComplete_recipes>> autocomplete_recipe_call = ApiClient.getUserService().auto_complete_recipes(apiKey,newText,10);
         autocomplete_recipe_call.enqueue(new Callback<List<AutoComplete_recipes>>() {
             @Override
             public void onResponse(Call<List<AutoComplete_recipes>> call, Response<List<AutoComplete_recipes>> response) {
@@ -146,7 +146,7 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
     }
 
     private void get_recipes(String ingredients){
-        Call<List<RecipeResponse>> recipe_response_call = ApiClient.getUserService().get_recipe_by_Ingredients(apiKey,ingredients,20);
+        Call<List<RecipeResponse>> recipe_response_call = ApiClient.getUserService().get_recipe_by_Ingredients(apiKey,ingredients,15);
         recipe_response_call.enqueue(new Callback<List<RecipeResponse>>() {
             @Override
             public void onResponse(Call<List<RecipeResponse>> call, Response<List<RecipeResponse>> response) {
@@ -171,7 +171,7 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
     }
 
     private void random_recipes(){
-        Call<Random_Recipe_response> random_recipe_call = ApiClient.getUserService().get_random_recipes(apiKey,"vegetarian,lunch,dinner",20);
+        Call<Random_Recipe_response> random_recipe_call = ApiClient.getUserService().get_random_recipes(apiKey,"vegetarian,lunch,dinner",8);
         random_recipe_call.enqueue(new Callback<Random_Recipe_response>() {
             @Override
             public void onResponse(Call<Random_Recipe_response> call, Response<Random_Recipe_response> response) {
