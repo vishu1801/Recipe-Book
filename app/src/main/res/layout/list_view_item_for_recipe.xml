@@ -7,23 +7,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="15sp">
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/background"
+        android:elevation="5dp">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200sp"
-            android:id="@+id/image_view_for_recipe"/>
+            android:id="@+id/image_view_for_recipe"
+            android:background="@drawable/image"
+            android:padding="2dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Recipe Name"
             android:id="@+id/recipe_title"
             android:textSize="25sp"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/black"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/missed_ingredient"
-            android:textSize="10sp"/>
+            android:textSize="15sp"
+            android:layout_margin="5dp"/>
 
     </LinearLayout>
 
