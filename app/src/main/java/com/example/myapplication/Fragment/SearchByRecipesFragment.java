@@ -102,7 +102,7 @@ public class SearchByRecipesFragment extends Fragment implements Recipes_Adapter
         your_ingredient_recipes=root.findViewById(R.id.your_ingredient_recipe);
         recipeResponse=new ArrayList<>();
         random_recipes=root.findViewById(R.id.random_recipe_recycler);
-        random_recipe_response=new ArrayList<>();
+        random_recipe_response=new ArrayList<Random_Recipe_response>();
 
 
         //setting adapter

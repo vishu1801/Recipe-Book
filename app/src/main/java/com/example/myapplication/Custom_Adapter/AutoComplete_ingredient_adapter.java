@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -90,6 +89,5 @@ public class AutoComplete_ingredient_adapter extends RecyclerView.Adapter<AutoCo
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Ingredients").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         reference.push().setValue(autoCompleteingredients);
         Toasty.success(mcontext,"Ingredient Added",Toasty.LENGTH_SHORT,true).show();
-        Toast.makeText(mcontext, "Ingredient Added Successfully.", Toast.LENGTH_SHORT).show();
     }
 }

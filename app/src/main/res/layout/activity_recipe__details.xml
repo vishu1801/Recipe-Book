@@ -34,8 +34,17 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"/>
 
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/favorite"
+                android:id="@+id/add_fav"
+                app:layout_collapseMode="pin"
+                android:layout_gravity="right"
+                android:clickable="true"
+                android:tag="fav1"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
         <com.google.android.material.tabs.TabLayout

@@ -11,24 +11,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.AllResponse.Recipe_By_ingredient_Response.RecipeResponse;
+import com.example.myapplication.AllResponse.Temp;
 import com.example.myapplication.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Recipes_Adapter extends RecyclerView.Adapter<Recipes_Adapter.ViewHolder> {
-
+public class Fav_Adapter extends RecyclerView.Adapter<Fav_Adapter.ViewHolder>{
     Context mcontext;
     Activity mactivity;
-    ArrayList<RecipeResponse> recipes_list;
-    private onRecipeListener onRecipeListener;
+    ArrayList<Temp> recipes_list;
+    private Onfav_Listener onfav_listener;
 
-    public Recipes_Adapter(@NonNull Context context, Activity activity, ArrayList<RecipeResponse> data,onRecipeListener onRecipeListener) {
+    public Fav_Adapter(@NonNull Context context, Activity activity, ArrayList<Temp> data, Onfav_Listener onfav_listener) {
         this.mcontext=context;
         this.mactivity=activity;
         this.recipes_list=data;
-        this.onRecipeListener=onRecipeListener;
+        this.onfav_listener=onfav_listener;
     }
 
     @NonNull
@@ -37,7 +36,7 @@ public class Recipes_Adapter extends RecyclerView.Adapter<Recipes_Adapter.ViewHo
 
         View view = LayoutInflater.from(mcontext).inflate(R.layout.list_view_item_for_recipe,parent,false);
 
-        return new ViewHolder(view,onRecipeListener);
+        return new ViewHolder(view,onfav_listener);
     }
 
     @Override
@@ -49,8 +48,6 @@ public class Recipes_Adapter extends RecyclerView.Adapter<Recipes_Adapter.ViewHo
                 .fit()
                 .into(holder.recipe_image);
         holder.recipe_title.setText(recipes_list.get(position).getTitle());
-        holder.missed_ingr.setText(recipes_list.get(position).getMissedIngredientCount()+" Missed Ingredients");
-
     }
 
     @Override
@@ -64,26 +61,26 @@ public class Recipes_Adapter extends RecyclerView.Adapter<Recipes_Adapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView recipe_image;
-        TextView recipe_title,missed_ingr;
-        onRecipeListener onRecipeListener;
+        TextView recipe_title;
+        Onfav_Listener onfav_listener;
 
-        public ViewHolder(@NonNull View itemView, onRecipeListener onRecipeListener) {
+        public ViewHolder(@NonNull View itemView, Onfav_Listener onfav_listener) {
             super(itemView);
             recipe_image=itemView.findViewById(R.id.image_view_for_recipe);
             recipe_title=itemView.findViewById(R.id.recipe_title);
-            missed_ingr=itemView.findViewById(R.id.missed_ingredient);
-            this.onRecipeListener=onRecipeListener;
+            this.onfav_listener=onfav_listener;
 
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            onRecipeListener.onRecipeClick(getAdapterPosition());
+            onfav_listener.Onfavclick(getAdapterPosition());
         }
     }
 
-    public interface onRecipeListener{
-        void onRecipeClick(int position);
+    public interface Onfav_Listener{
+        void Onfavclick(int position);
     }
+
 }

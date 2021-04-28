@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,7 +63,7 @@ public class SearchByIngredientsFragment extends Fragment {
         view_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view_related_recipe();
+                view_related_recipe(true);
             }
         });
 
@@ -131,7 +130,7 @@ public class SearchByIngredientsFragment extends Fragment {
         });
     }
 
-    private void  view_related_recipe(){
+    private void  view_related_recipe(boolean t){
 
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Ingredients").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         reference.addValueEventListener(new ValueEventListener() {
@@ -141,7 +140,15 @@ public class SearchByIngredientsFragment extends Fragment {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     ingredients=ingredients+dataSnapshot.child("name").getValue().toString()+",";
                 }
-                transfer();
+                Bundle args = new Bundle();
+                args.putString("ingredient", ingredients);
+                SearchByRecipesFragment fragment = new SearchByRecipesFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragment.setArguments(args);
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_nav, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
 
             @Override
@@ -151,21 +158,6 @@ public class SearchByIngredientsFragment extends Fragment {
 
     }
 
-    private void transfer(){
-        if(ingredients==""){
-            Toast.makeText(getContext(), "sorry", Toast.LENGTH_SHORT).show();
-        }else {
-            Bundle args = new Bundle();
-            args.putString("ingredient", ingredients);
-            SearchByRecipesFragment fragment = new SearchByRecipesFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            fragment.setArguments(args);
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_nav, fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
-    }
 
     private void auto_complete_ingredient(String newText){
         Call<List<Ingredients_response>> ingredient_call = ApiClient.getUserService().get_ingredients(apiKey,newText,20);

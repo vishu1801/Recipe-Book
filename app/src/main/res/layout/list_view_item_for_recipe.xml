@@ -12,32 +12,18 @@
             android:layout_width="match_parent"
             android:layout_height="200sp"
             android:id="@+id/image_view_for_recipe"/>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="40sp"
-                android:layout_height="40sp"
-                android:src="@drawable/favorite"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:id="@+id/fav1"
-                android:tag="fav1"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Recipe Name"
-                android:id="@+id/recipe_title"
-                android:textSize="25sp"
-                android:layout_toStartOf="@+id/fav1"
-                android:textColor="@color/black"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/missed_ingredient"
-                android:textSize="10sp"
-                android:layout_below="@id/recipe_title"/>
-        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Name"
+            android:id="@+id/recipe_title"
+            android:textSize="25sp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/missed_ingredient"
+            android:textSize="10sp"/>
 
     </LinearLayout>
 
