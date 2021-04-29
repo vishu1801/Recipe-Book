@@ -55,7 +55,6 @@ public class Your_ingredient_Adapter extends RecyclerView.Adapter<Your_ingredien
         Picasso.get()
                 .load("https://spoonacular.com/cdn/ingredients_100x100/"+ingredient_list.get(position).getImage())
                 .fit()
-                .centerInside()
                 .into(holder.imageView);
         holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override

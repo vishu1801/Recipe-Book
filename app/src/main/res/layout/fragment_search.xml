@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_view_ingredient"
         android:visibility="gone"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:id="@+id/ingredient_response"/>
 
 

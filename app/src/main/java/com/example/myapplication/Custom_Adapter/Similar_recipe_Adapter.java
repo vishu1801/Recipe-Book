@@ -45,9 +45,9 @@ public class Similar_recipe_Adapter extends RecyclerView.Adapter<Similar_recipe_
 
         holder.recipe_title.setText(similar_recipes_list.get(position).getTitle());
         Picasso.get()
-                .load("https://spoonacular.com/recipeImages/"+similar_recipes_list.get(position).getId()+"-90x90."+similar_recipes_list.get(position).getImageType())
-                .centerInside()
+                .load("https://spoonacular.com/recipeImages/"+similar_recipes_list.get(position).getId()+"-240x150."+similar_recipes_list.get(position).getImageType())
                 .fit()
+                .centerCrop()
                 .into(holder.recipe_image);
 
     }

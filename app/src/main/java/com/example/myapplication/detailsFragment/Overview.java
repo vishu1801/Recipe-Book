@@ -63,7 +63,7 @@ public class Overview extends Fragment implements Similar_recipe_Adapter.Onsimil
 
         //set Adapter and layout
         similar_recipe_adapter=new Similar_recipe_Adapter(getContext(),getActivity(),similar_recipes_list,Overview.this::Onsimilarrecipeclick);
-        similar_recipes_recycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,true));
+        similar_recipes_recycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         similar_recipes_recycler.setAdapter(similar_recipe_adapter);
 
 
