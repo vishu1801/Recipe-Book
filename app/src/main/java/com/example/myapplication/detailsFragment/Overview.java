@@ -61,23 +61,29 @@ public class Overview extends Fragment implements Similar_recipe_Adapter.Onsimil
         similar_recipes_recycler = root.findViewById(R.id.similar_recipe);
         similar_recipes_list = new ArrayList<>();
 
-        //set Adapter and layout
+        //set Adapter and layout for similar recipes
         similar_recipe_adapter=new Similar_recipe_Adapter(getContext(),getActivity(),similar_recipes_list,Overview.this::Onsimilarrecipeclick);
         similar_recipes_recycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         similar_recipes_recycler.setAdapter(similar_recipe_adapter);
 
-
     }
 
     private void get_details(String id){
-        retrofit2.Call<Recipe_details_Response> recipe_details_responseCall = ApiClient.getUserService().recipe_detail_response(Integer.parseInt(id),apiKey);
+        Call<Recipe_details_Response> recipe_details_responseCall = ApiClient.getUserService().recipe_detail_response(Integer.parseInt(id),apiKey);
         recipe_details_responseCall.enqueue(new Callback<Recipe_details_Response>() {
             @Override
             public void onResponse(retrofit2.Call<Recipe_details_Response> call, Response<Recipe_details_Response> response) {
-                description_text.setText(Html.fromHtml(response.body().getSummary()));
-                ready_text.setText("Ready in " + response.body().getReadyInMinutes()+" minutes");
-                servings_text.setText("Servings: "+ response.body().getServings());
-
+                if(response.isSuccessful()) {
+                    if(response.body()!=null) {
+                        description_text.setText(Html.fromHtml(response.body().getSummary()));
+                        ready_text.setText("Ready in " + response.body().getReadyInMinutes() + " minutes");
+                        servings_text.setText("Servings: " + response.body().getServings());
+                    }else {
+                        Toasty.error(getContext(), "No details about this recipe", Toasty.LENGTH_SHORT, true).show();
+                    }
+                }else{
+                    Toasty.error(getContext(),"Some technical issue. Try after some time.",Toasty.LENGTH_SHORT,true).show();
+                }
             }
 
             @Override

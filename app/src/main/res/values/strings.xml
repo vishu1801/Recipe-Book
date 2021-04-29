@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Recipe Book</string>
-
+    <string name="tags_style"><i><u>Tag</u></i></string>
 </resources>
